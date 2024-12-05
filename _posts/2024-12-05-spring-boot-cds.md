@@ -11,8 +11,7 @@ toc: true
 I recently set out to optimize the startup time of our Spring Boot applications running on AWS ECS. While startup speed
 might seem trivial for long-running applications, it can make autoscaling more effective and help us unlock cost savings
 without sacrificing system resilience. This post shares my journey of using Class Data Sharing (CDS) to
-reduce the startup time
-of the application.
+reduce the startup time of a Spring Boot application.
 
 # What is CDS?
 
@@ -40,7 +39,9 @@ For the experiment, the application is deployed on AWS ECS with the following re
 
 * 2 vCpus, 6 GB Memory (5.5 GB allocated to the Java heap)
 * Open JDK 21
-* Startup time measured over four runs using both G1GC and EpsilonGC to assess garbage collection's impact.
+* Startup time was measured over four runs using both G1GC
+  and [EpsilonGC](https://blogs.oracle.com/javamagazine/post/epsilon-the-jdks-do-nothing-garbage-collector) to assess
+  garbage collection's impact.
 
 ## Application
 
@@ -135,8 +136,8 @@ Enabling CDS showed no improvement in startup time. It worked in simpler apps, i
 
 ## First Observations
 
-I don't give up after one failure, so it's time to dig deeper. In my docker build log there are no logs from
-the Spring application. The log levels are set correctly, so the application might not be starting up properly.
+I don't give up after one failure, so it's time to dig deeper. In my docker build log there were no logs from the Spring
+application. This indicated that the application might not be starting up properly.
 
 ## Load Class List
 
@@ -201,17 +202,17 @@ _Spring Bootstrap classes in the thread stack_
 **Fix**: I removed the `spring-cloud-starter-bootstrap` dependency and replaced the bootstrap config with the modern
 `config:import` style.
 
-This change yielded some results — 72% of the classes are now loaded from the shared archive.
+This change yielded some results — 72% of the classes were now loaded from the shared archive.
 
 ### Spring Cloud openfeign
 
 The second culprit identified was `spring-cloud-openfeign`. It creates a new named application context
 for every Feign client. These separate application contexts triggered the early application exit.
 
-Fix: Replaced Feign clients
+**Fix**: Replaced Feign clients
 with [Spring Interface Clients](https://docs.spring.io/spring-framework/reference/integration/rest-clients.html#rest-http-interface).
 
-After removing Spring Cloud Openfeign, 87% of classes were loaded from the shared archive and tne startup time was
+After removing Spring Cloud Openfeign, 87% of classes were loaded from the shared archive and the startup time was
 24–28&nbsp;s
 
 # Summary & Conclusion
