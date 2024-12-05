@@ -29,7 +29,7 @@ github:
   username: Mistborn94 # change to your GitHub username
 
 twitter:
-  username: # change to your Twitter username
+  username: Babalela01 # change to your Twitter username
 
 social:
   # Change to your full name.
@@ -38,11 +38,11 @@ social:
   email: supergirl0894@gmail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username # change to your Twitter homepage
+    - https://www.linkedin.com/in/renetteros
     - https://github.com/Mistborn94 # change to your GitHub homepage
+    - https://twitter.com/Babalela01 # change to your Twitter homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
-    - https://www.linkedin.com/in/renetteros
 
 # Site Verification Settings
 webmaster_verifications:

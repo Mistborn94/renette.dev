@@ -1,1 +1,11 @@
+https://chirpy.cotes.page/posts/write-a-new-post/
+Create a new file named YYYY-MM-DD-TITLE.EXTENSION
+---
+title: TITLE
+date: YYYY-MM-DD HH:MM:SS +/-TTTT
+categories: [CATEGORY, SUB_CATEGORY]
+tags: [TAG]     # TAG names should always be lowercase
+description: Short summary of the post.
+toc: false
+---
 
