@@ -140,7 +140,7 @@ the Spring application. The log levels are set correctly, so the application mig
 
 ## Load Class List
 
-To understand what occurred during the CDS training run, I used the `-XX:DumpLoadedClassList` argument to generate a
+To understand what occurred during the CDS training run, I added the `-XX:DumpLoadedClassList` argument to generate a
 list of loaded classes.
 
 Key observations:
@@ -148,7 +148,7 @@ Key observations:
 * The only application class included was the Spring Boot application class itself.
 * Many Maven dependencies were notably absent.
 
-This indicated issues with class loading during the training phase, limiting CDS effectiveness
+This indicated issues with class loading during the training phase, limiting CDS effectiveness.
 
 ## Classloader Logs
 
